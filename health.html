@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>HealthBuddy - Symptom Checker</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f3f7ff;
+        margin: 0;
+        padding: 0;
+    }
+    .container {
+        width: 90%;
+        max-width: 600px;
+        margin: 40px auto;
+        background: #fff;
+        padding: 20px 25px;
+        border-radius: 10px;
+        box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    }
+    h2 {
+        text-align: center;
+        color: #2b60ff;
+    }
+    label {
+        font-size: 18px;
+        font-weight: bold;
+    }
+    select, button {
+        width: 100%;
+        padding: 12px;
+        margin-top: 10px;
+        font-size: 16px;
+    }
+    button {
+        background: #2b60ff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        margin-top: 15px;
+        cursor: pointer;
+    }
+    button:hover {
+        background: #1b48d1;
+    }
+    .result-box {
+        margin-top: 25px;
+        background: #eef3ff;
+        padding: 15px;
+        border-radius: 8px;
+        line-height: 1.7;
+    }
+    .warning {
+        color: red;
+        font-weight: bold;
+    }
+</style>
+
+</head>
+<body>
+
+<div class="container">
+    <h2>HealthBuddy – Simple Symptom Helper</h2>
+
+    <label>Select your symptoms</label>
+    <select id="symptom">
+        <option value="">-- Choose One --</option>
+        <option value="cold">Cold</option>
+        <option value="cough">Cough</option>
+        <option value="fever">Fever</option>
+        <option value="headache">Headache</option>
+        <option value="throat">Sore Throat</option>
+        <option value="bodypain">Body Pain</option>
+    </select>
+
+    <button onclick="checkSymptoms()">Get Advice</button>
+
+    <div class="result-box" id="result"></div>
+</div>
+
+<script>
+function checkSymptoms() {
+    let s = document.getElementById("symptom").value;
+    let result = document.getElementById("result");
+
+    if (s === "") {
+        result.innerHTML = "<b>Please select a symptom.</b>";
+        return;
+    }
+
+    let advice = {
+        cold: {
+            home: `
+                • Drink warm water frequently<br>
+                • Steam inhalation 2-3 times/day<br>
+                • Rest and stay hydrated<br>
+                • Use saline nasal drops`,
+            medicine: `
+                • Cetirizine (Cetzine) – once daily at night<br>
+                • D-Cold Total / Vicks Action 500 (Day only)<br>
+                • Avoid in drowsiness situations`
+        },
+        cough: {
+            home: `
+                • Warm water + honey (for adults)<br>
+                • Steam inhalation<br>
+                • Avoid cold foods<br>
+                • Ginger tea`,
+            medicine: `
+                • Cofsils / Strepsils lozenges<br>
+                • Honitus syrup (Ayurvedic)<br>
+                • Benadryl (if dry cough, may cause drowsiness)`
+        },
+        fever: {
+            home: `
+                • Drink ORS / warm water<br>
+                • Take rest<br>
+                • Light food only`,
+            medicine: `
+                • Paracetamol 500mg (Crocin) – every 6–8 hrs if needed<br>
+                • Do NOT exceed 3 tablets/day`
+        },
+        headache: {
+            home: `
+                • Drink 1–2 glasses of water (dehydration common)<br>
+                • Cold/ warm compress on head<br>
+                • Relax in a quiet dark room`,
+            medicine: `
+                • Paracetamol 500mg (Crocin)<br>
+                • Avoid pain balms if sensitive`
+        },
+        throat: {
+            home: `
+                • Warm salt-water gargle<br>
+                • Honey + warm water<br>
+                • Avoid cold items<br>
+                • Drink turmeric milk`,
+            medicine: `
+                • Strepsils / Cofsils lozenges<br>
+                • Alex cough syrup (if throat irritation)`
+        },
+        bodypain: {
+            home: `
+                • Take rest<br>
+                • Warm water bath<br>
+                • Keep body hydrated`,
+            medicine: `
+                • Paracetamol 500mg<br>
+                • Volini spray/gel (muscle pain)`
+        }
+    };
+
+    let output = `
+        <b>Home Care Remedies:</b><br>${advice[s].home}<br><br>
+        <b>Common OTC Medicines:</b><br>${advice[s].medicine}<br><br>
+        <b class="warning">Seek medical help if symptoms last more than 3 days, worsen, or are severe.</b><br><br>
+        <i>Disclaimer: This tool gives general guidance for minor issues. Not a medical diagnosis.</i>
+    `;
+
+    result.innerHTML = output;
+}
+</script>
+
+</body>
+</html>
